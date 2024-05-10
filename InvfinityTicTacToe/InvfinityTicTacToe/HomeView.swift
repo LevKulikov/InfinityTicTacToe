@@ -23,6 +23,7 @@ struct HomeView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                         .padding(.top)
+                        .opacity(selectedGame == nil ? 1 : 0)
                     
                     OnlyThreeGameCell()
                 }
@@ -43,6 +44,7 @@ struct HomeView: View {
             Image(systemName: "cube.transparent")
                 .font(.system(size: 50))
                 .foregroundStyle(Color.red)
+                .matchedGeometryEffect(id: "gameImage", in: namespace)
             
             VStack(alignment: .leading) {
                 Text("Only three")
@@ -53,8 +55,8 @@ struct HomeView: View {
                     .font(.callout)
                     .foregroundStyle(Color.secondary)
             }
+            .opacity(selectedGame == nil ? 1 : 0)
         }
-        .opacity(selectedGame == nil ? 1 : 0)
         .padding()
         .frame(maxWidth: 500)
         .background {

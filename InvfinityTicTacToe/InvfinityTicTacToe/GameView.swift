@@ -87,6 +87,7 @@ struct GameView: View {
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)
                 .padding(.top, 50)
+                .matchedGeometryEffect(id: "gameImage", in: namespace)
             }
             .matchedGeometryEffect(id: "gameview", in: namespace)
             .ignoresSafeArea(edges: .vertical)
