@@ -54,11 +54,13 @@ struct HomeView: View {
                     .foregroundStyle(Color.secondary)
             }
         }
+        .opacity(selectedGame == nil ? 1 : 0)
         .padding()
         .frame(maxWidth: 500)
         .background {
             RoundedRectangle(cornerRadius: 25.0)
                 .fill(Material.thin)
+                .matchedGeometryEffect(id: "gameview", in: namespace)
         }
         .padding()
         .onTapGesture {
@@ -66,7 +68,6 @@ struct HomeView: View {
                 selectedGame = .onlyThree
             }
         }
-        .matchedGeometryEffect(id: "gameview", in: namespace)
     }
     
     //MARK: - Methods
