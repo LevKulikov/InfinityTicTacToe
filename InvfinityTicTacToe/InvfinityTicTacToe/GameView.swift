@@ -76,7 +76,6 @@ struct GameView: View {
                         XOmarkIndicatorView(mark: .xmark)
                     }
                 }
-                .ignoresSafeArea(edges: .vertical)
             }
             .overlay(alignment: .topLeading) {
                 Button("Close") {
@@ -86,9 +85,11 @@ struct GameView: View {
                 }
                 .buttonStyle(.bordered)
                 .foregroundStyle(.secondary)
-                .padding()
+                .padding(.horizontal)
+                .padding(.top, 50)
             }
             .matchedGeometryEffect(id: "gameview", in: namespace)
+            .ignoresSafeArea(edges: .vertical)
         }
     }
     
