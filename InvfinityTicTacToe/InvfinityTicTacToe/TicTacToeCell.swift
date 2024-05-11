@@ -9,11 +9,20 @@ import SwiftUI
 
 struct TicTacToeCell: View {
     @Binding var currentMarkPlay: TicTacToeMark
+    @Binding var xoMarkSet: TicTacToeMark?
     let index: Int
     let markSize: CGFloat
-    
-    @State private var xoMarkSet: TicTacToeMark?
+    let callback: ((TicTacToeMark?, Int) -> Void)?
+
     private var userIdiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    
+    init(currentMarkPlay: Binding<TicTacToeMark>, xoMarkSet: Binding<TicTacToeMark?>, index: Int, markSize: CGFloat, callback: ((TicTacToeMark?, Int) -> Void)? = nil ) {
+        self._currentMarkPlay = currentMarkPlay
+        self._xoMarkSet = xoMarkSet
+        self.index = index
+        self.markSize = markSize
+        self.callback = callback
+    }
     
     var body: some View {
         RoundedRectangle(cornerRadius: userIdiom == .phone ? 15 : 25)
@@ -44,15 +53,14 @@ struct TicTacToeCell: View {
     
     private func onTap() {
         guard xoMarkSet == nil else { return }
-        
         withAnimation(.snappy) {
             xoMarkSet = currentMarkPlay
-            
             if currentMarkPlay == .xmark {
                 currentMarkPlay = .omark
             } else {
                 currentMarkPlay = .xmark
             }
+            callback?(xoMarkSet, index)
         }
     }
 }
@@ -60,6 +68,6 @@ struct TicTacToeCell: View {
 #Preview {
     @State var mark: TicTacToeMark = .omark
     
-    return TicTacToeCell(currentMarkPlay: $mark, index: 1, markSize: 100)
+    return TicTacToeCell(currentMarkPlay: $mark, xoMarkSet: .constant(nil), index: 1, markSize: 100)
         .frame(width: 200, height: 200)
 }
