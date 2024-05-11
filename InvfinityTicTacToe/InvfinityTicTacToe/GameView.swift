@@ -40,18 +40,20 @@ struct GameView: View {
                 
                 LazyVGrid(columns: grids, spacing: spacing) {
                     ForEach(0..<9, id: \.self) { index in
-                        RoundedRectangle(cornerRadius: userIdiom == .phone ? 15 : 25)
-                            .fill(Color.secondary)
+//                        RoundedRectangle(cornerRadius: userIdiom == .phone ? 15 : 25)
+//                            .fill(Color.secondary)
+//                            .frame(height: maxHeight)
+//                            .onTapGesture {
+//                                withAnimation {
+//                                    if currentMarkPlay == .xmark {
+//                                        currentMarkPlay = .omark
+//                                    } else {
+//                                        currentMarkPlay = .xmark
+//                                    }
+//                                }
+//                            }
+                        TicTacToeCell(currentMarkPlay: $currentMarkPlay, index: index, markSize: maxHeight / 2)
                             .frame(height: maxHeight)
-                            .onTapGesture {
-                                withAnimation {
-                                    if currentMarkPlay == .xmark {
-                                        currentMarkPlay = .omark
-                                    } else {
-                                        currentMarkPlay = .xmark
-                                    }
-                                }
-                            }
                     }
                 }
                 .padding()
@@ -76,7 +78,6 @@ struct GameView: View {
                         XOmarkIndicatorView(mark: .xmark)
                     }
                 }
-                .ignoresSafeArea(edges: .vertical)
             }
             .overlay(alignment: .topLeading) {
                 Button("Close") {
@@ -86,9 +87,12 @@ struct GameView: View {
                 }
                 .buttonStyle(.bordered)
                 .foregroundStyle(.secondary)
-                .padding()
+                .padding(.horizontal)
+                .padding(.top, 50)
+                .matchedGeometryEffect(id: "gameImage", in: namespace)
             }
             .matchedGeometryEffect(id: "gameview", in: namespace)
+            .ignoresSafeArea(edges: .vertical)
         }
     }
     
