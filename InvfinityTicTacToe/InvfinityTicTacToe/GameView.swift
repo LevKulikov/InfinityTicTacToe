@@ -11,9 +11,9 @@ enum GameType: CaseIterable {
     case onlyThree
 }
 
-enum TicTacToeMark {
-    case xmark
-    case omark
+enum TicTacToeMark: String {
+    case xmark = "X mark"
+    case omark = "O mark"
 }
 
 struct GameView: View {
@@ -45,7 +45,11 @@ struct GameView: View {
     @State private var markPositions: [TicTacToeMark: [Int]] = [
         .xmark : [],
         .omark : []
-    ]
+    ] {
+        didSet {
+            winCombinationCheck()
+        }
+    }
     private var userIdiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
     //MARK: - Body and Views
@@ -158,6 +162,28 @@ struct GameView: View {
                 markPositions[cellMark] = markIndexes
                 withAnimation(.snappy) {
                     gameScheme[firstIndex] = nil
+                }
+            }
+        }
+    }
+    
+    private func winCombinationCheck() {
+        let combinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ]
+        
+        for certainMark in markPositions {
+            let positions = certainMark.value.sorted()
+            for combination in combinations {
+                if positions == combination {
+                    print("\(certainMark.key.rawValue) wins!")
                 }
             }
         }
