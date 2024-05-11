@@ -69,9 +69,7 @@ struct GameView: View {
                             }),
                             index: index,
                             markSize: maxHeight / 2,
-                            callback: { cellMark, cellIndex in
-                                manageGame(index: cellIndex)
-                            }
+                            callback: manageGame
                         )
                         .frame(height: maxHeight)
                     }
@@ -163,11 +161,6 @@ struct GameView: View {
                 }
             }
         }
-        
-//        print("index: \(index), \(gameScheme[index]!)")
-//
-//        dump(markPositions)
-//        print("\n")
     }
 }
 

@@ -12,11 +12,11 @@ struct TicTacToeCell: View {
     @Binding var xoMarkSet: TicTacToeMark?
     let index: Int
     let markSize: CGFloat
-    let callback: ((TicTacToeMark?, Int) -> Void)?
+    let callback: ((Int) -> Void)?
 
     private var userIdiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
-    init(currentMarkPlay: Binding<TicTacToeMark>, xoMarkSet: Binding<TicTacToeMark?>, index: Int, markSize: CGFloat, callback: ((TicTacToeMark?, Int) -> Void)? = nil ) {
+    init(currentMarkPlay: Binding<TicTacToeMark>, xoMarkSet: Binding<TicTacToeMark?>, index: Int, markSize: CGFloat, callback: ((Int) -> Void)? = nil ) {
         self._currentMarkPlay = currentMarkPlay
         self._xoMarkSet = xoMarkSet
         self.index = index
@@ -60,7 +60,7 @@ struct TicTacToeCell: View {
             } else {
                 currentMarkPlay = .xmark
             }
-            callback?(xoMarkSet, index)
+            callback?(index)
         }
     }
 }
