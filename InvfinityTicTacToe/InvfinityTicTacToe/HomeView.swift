@@ -58,7 +58,6 @@ struct HomeView: View {
             .opacity(selectedGame == nil ? 1 : 0)
         }
         .padding()
-        .frame(maxWidth: 500)
         .background {
             RoundedRectangle(cornerRadius: 25.0)
                 .fill(Material.thin)

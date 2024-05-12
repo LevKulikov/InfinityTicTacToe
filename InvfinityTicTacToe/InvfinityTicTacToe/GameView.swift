@@ -128,12 +128,19 @@ struct GameView: View {
     private var closeButton: some View {
         Button("Game") {
             withAnimation(.snappy) {
-//                selectedGame = nil
                 showInfo = true
             }
         }
         .buttonStyle(.bordered)
         .foregroundStyle(.secondary)
+        .contextMenu {
+            Button("Close Game") {
+                withAnimation(.snappy) {
+                    selectedGame = nil
+                }
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 5))
         .padding(.horizontal)
         .padding(.top, 50)
         .matchedGeometryEffect(id: "gameImage", in: namespace)
@@ -207,7 +214,7 @@ struct GameView: View {
 
 #Preview {
     @Namespace var namespace
-    @State var selectedGame: GameType?
+    @State var selectedGame: GameType? = .onlyThree
     
     return GameView(namespace: namespace, selectedGame: $selectedGame)
 }
