@@ -26,12 +26,7 @@ struct GameView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var currentMarkPlay: TicTacToeMark = .xmark
     @State private var showInfo = false
-    private let spacing: CGFloat = 8
-    private var grids: [GridItem] {
-        [GridItem(spacing: spacing),
-         GridItem(spacing: spacing),
-         GridItem(spacing: spacing)]
-    }
+    @State private var winner: TicTacToeMark? = nil
     @State private var gameScheme: [Int : TicTacToeMark?] = [
         0 : nil,
         1 : nil,
@@ -50,6 +45,12 @@ struct GameView: View {
         didSet {
             winCombinationCheck()
         }
+    }
+    private let spacing: CGFloat = 8
+    private var grids: [GridItem] {
+        [GridItem(spacing: spacing),
+         GridItem(spacing: spacing),
+         GridItem(spacing: spacing)]
     }
     private var userIdiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
@@ -81,10 +82,11 @@ struct GameView: View {
                         }
                     }
                     .padding()
+                    .disabled(winner != nil)
                     
                     Spacer()
                 }
-                .background(background)
+                .background(markIndicators)
                 .overlay(alignment: .topLeading) {
                     closeButton
                 }
@@ -96,6 +98,7 @@ struct GameView: View {
                         namespace: namespace,
                         showInfo: $showInfo,
                         selectedGame: $selectedGame,
+                        winner: $winner,
                         gameScheme: $gameScheme,
                         markPositions: $markPositions
                     )
@@ -105,7 +108,7 @@ struct GameView: View {
     }
     
     //MARK: Views
-    private var background: some View {
+    private var markIndicators: some View {
         ZStack {
             if colorScheme == .light {
                 Color.white
@@ -125,7 +128,7 @@ struct GameView: View {
         }
     }
     
-    private var closeButton: some View {
+    var closeButton: some View {
         Button("Game") {
             withAnimation(.snappy) {
                 showInfo = true
@@ -134,11 +137,7 @@ struct GameView: View {
         .buttonStyle(.bordered)
         .foregroundStyle(.secondary)
         .contextMenu {
-            Button("Close Game") {
-                withAnimation(.snappy) {
-                    selectedGame = nil
-                }
-            }
+            Button("Close Game", action: closeGame)
         }
         .clipShape(RoundedRectangle(cornerRadius: 5))
         .padding(.horizontal)
@@ -155,20 +154,31 @@ struct GameView: View {
     @ViewBuilder
     private func XOmarkIndicatorView(mark: TicTacToeMark) -> some View {
         let alignment: Alignment = mark == .xmark ? .top : .bottom
-        let color = mark == .xmark ? Color.red : Color.blue
+        let markColor = mark == .xmark ? Color.red : Color.blue
+        let wholeIndicatorColor = currentMarkPlay == mark ? markColor : .secondary
+        let winIndicatorColor = winner == mark ? Color.green : ( winner == nil ? wholeIndicatorColor : .secondary)
         
         RoundedRectangle(cornerRadius: 25)
-            .fill(currentMarkPlay == mark ? color.opacity(0.2) : Color.secondary.opacity(0.15))
+            .fill(winIndicatorColor.opacity(0.15))
             .frame(height: 120)
             .frame(maxWidth: 500)
             .padding(userIdiom == .phone ? 0 : spacing)
             .overlay(alignment: userIdiom == .phone ? alignment : .center) {
-                Image(systemName: mark == .xmark ? "xmark" : "circle")
-                    .font(.largeTitle)
-                    .fontWeight(.black)
-                    .foregroundStyle(currentMarkPlay == mark ? color : .secondary)
-                    .shadow(color: currentMarkPlay == mark ? color : .secondary, radius: currentMarkPlay == mark ? 10 : 0)
-                    .padding()
+                HStack {
+                    Image(systemName: mark == .xmark ? "xmark" : "circle")
+                        .font(.largeTitle)
+                        .fontWeight(.black)
+                        .foregroundStyle(winIndicatorColor)
+                        .shadow(color: winIndicatorColor, radius: currentMarkPlay == mark ? 10 : 0)
+                        .padding(.vertical)
+                    
+                    if winner == mark {
+                        Text("Victory 🎉")
+                            .font(.title2)
+                            .bold()
+                            .foregroundStyle(Color.green)
+                    }
+                }
             }
     }
     
@@ -205,8 +215,31 @@ struct GameView: View {
             let positions = certainMark.value.sorted()
             for combination in combinations {
                 if positions == combination {
-                    print("\(certainMark.key.rawValue) wins!")
+                    withAnimation {
+                        winner = certainMark.key
+                        showInfo = true
+                    }
                 }
+            }
+        }
+    }
+    
+    private func closeGame() {
+        withAnimation(.snappy) {
+            selectedGame = nil
+        }
+    }
+    
+    private func restartGame() {
+        withAnimation(.snappy) {
+            winner = nil
+            
+            for index in gameScheme.keys {
+                gameScheme[index] = nil
+            }
+            
+            for index in markPositions.keys {
+                markPositions[index] = []
             }
         }
     }
