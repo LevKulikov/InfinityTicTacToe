@@ -25,6 +25,7 @@ struct GameView: View {
     //MARK: Private props
     @Environment(\.colorScheme) var colorScheme
     @State private var currentMarkPlay: TicTacToeMark = .xmark
+    @State private var showInfo = false
     private let spacing: CGFloat = 8
     private var grids: [GridItem] {
         [GridItem(spacing: spacing),
@@ -59,35 +60,47 @@ struct GameView: View {
             let screenSize = proxy.size
             let maxHeight = (screenSize.height - 2 * 100) / 3 - 3 * spacing
             
-            VStack {
-                Spacer()
-                
-                LazyVGrid(columns: grids, spacing: spacing) {
-                    ForEach(0..<9, id: \.self) { index in
-                        TicTacToeCell(
-                            currentMarkPlay: $currentMarkPlay,
-                            xoMarkSet: .init(get: {
-                                gameScheme[index] ?? nil
-                            }, set: { newCellMark in
-                                gameScheme[index] = newCellMark
-                            }),
-                            index: index,
-                            markSize: maxHeight / 2,
-                            callback: manageGame
-                        )
-                        .frame(height: maxHeight)
+            ZStack {
+                VStack {
+                    Spacer()
+                    
+                    LazyVGrid(columns: grids, spacing: spacing) {
+                        ForEach(0..<9, id: \.self) { index in
+                            TicTacToeCell(
+                                currentMarkPlay: $currentMarkPlay,
+                                xoMarkSet: .init(get: {
+                                    gameScheme[index] ?? nil
+                                }, set: { newCellMark in
+                                    gameScheme[index] = newCellMark
+                                }),
+                                index: index,
+                                markSize: maxHeight / 2,
+                                callback: manageGame
+                            )
+                            .frame(height: maxHeight)
+                        }
                     }
+                    .padding()
+                    
+                    Spacer()
                 }
-                .padding()
+                .background(background)
+                .overlay(alignment: .topLeading) {
+                    closeButton
+                }
+                .matchedGeometryEffect(id: "gameview", in: namespace)
+                .ignoresSafeArea(edges: .vertical)
                 
-                Spacer()
+                if showInfo {
+                    GameInfoView(
+                        namespace: namespace,
+                        showInfo: $showInfo,
+                        selectedGame: $selectedGame,
+                        gameScheme: $gameScheme,
+                        markPositions: $markPositions
+                    )
+                }
             }
-            .background(background)
-            .overlay(alignment: .topLeading) {
-                closeButton
-            }
-            .matchedGeometryEffect(id: "gameview", in: namespace)
-            .ignoresSafeArea(edges: .vertical)
         }
     }
     
@@ -113,9 +126,10 @@ struct GameView: View {
     }
     
     private var closeButton: some View {
-        Button("Close") {
+        Button("Game") {
             withAnimation(.snappy) {
-                selectedGame = nil
+//                selectedGame = nil
+                showInfo = true
             }
         }
         .buttonStyle(.bordered)
@@ -123,6 +137,7 @@ struct GameView: View {
         .padding(.horizontal)
         .padding(.top, 50)
         .matchedGeometryEffect(id: "gameImage", in: namespace)
+        .opacity(showInfo ? 0 : 1)
     }
     
     //MARK: - Methods

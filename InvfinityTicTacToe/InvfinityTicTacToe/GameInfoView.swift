@@ -79,7 +79,7 @@ struct GameInfoView: View {
     
     //MARK: - Methods
     private func closeInfo() {
-        withAnimation(.snappy) {
+        withAnimation(.easeOut) {
             showInfo = false
         }
     }
