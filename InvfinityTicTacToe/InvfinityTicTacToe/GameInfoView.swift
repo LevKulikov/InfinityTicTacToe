@@ -28,7 +28,7 @@ struct GameInfoView: View {
                     Spacer()
                     
                     Button("", systemImage: "xmark") {
-                        
+                        closeInfo()
                     }
                     .font(.title2)
                     .tint(.secondary)
@@ -38,7 +38,7 @@ struct GameInfoView: View {
                     .padding(.vertical)
                 
                 Button {
-                    
+                    restartGameAndCloseInfo()
                 } label: {
                     Text("Restart")
                         .frame(height: 30)
@@ -47,13 +47,14 @@ struct GameInfoView: View {
                 .buttonStyle(.bordered)
                 
                 Button {
-                    
+                    closeGame()
                 } label: {
                     Text("Close Game")
                         .frame(height: 30)
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(Color.red)
             }
             .padding()
             .background {
@@ -68,14 +69,37 @@ struct GameInfoView: View {
         .background {
             Rectangle()
                 .fill(Color.black.opacity(0.1))
-                .onTapGesture {
-                    print("Background tap")
-                }
+                .onTapGesture(perform: closeInfo)
         }
         .ignoresSafeArea()
     }
     
     //MARK: - Methods
+    
+    private func closeInfo() {
+        withAnimation(.snappy) {
+            showInfo = false
+        }
+    }
+    
+    private func restartGameAndCloseInfo() {
+        withAnimation(.snappy) {
+            for index in gameScheme.keys {
+                gameScheme[index] = nil
+            }
+            
+            for index in markPositions.keys {
+                markPositions[index] = []
+            }
+        }
+        closeInfo()
+    }
+    
+    private func closeGame() {
+        withAnimation(.snappy) {
+            selectedGame = nil
+        }
+    }
 }
 
 #Preview {
