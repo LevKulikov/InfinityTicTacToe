@@ -17,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		736B23612BF1531A00693D1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		73C7AE802BECF08600B2CD8F /* InvfinityTicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InvfinityTicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73C7AE832BECF08600B2CD8F /* InvfinityTicTacToeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvfinityTicTacToeApp.swift; sourceTree = "<group>"; };
 		73C7AE872BECF08700B2CD8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,6 +67,7 @@
 		73C7AE822BECF08600B2CD8F /* InvfinityTicTacToe */ = {
 			isa = PBXGroup;
 			children = (
+				736B23612BF1531A00693D1B /* Info.plist */,
 				73C7AE832BECF08600B2CD8F /* InvfinityTicTacToeApp.swift */,
 				73C7AE932BEEB0EA00B2CD8F /* HomeView.swift */,
 				73C7AE952BEEB51100B2CD8F /* GameView.swift */,
@@ -295,6 +297,7 @@
 				DEVELOPMENT_TEAM = 7P2A9ACZ7S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InvfinityTicTacToe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Infinity TicTacToe";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -306,7 +309,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = someballs.InvfinityTicTacToe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -326,6 +329,7 @@
 				DEVELOPMENT_TEAM = 7P2A9ACZ7S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InvfinityTicTacToe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Infinity TicTacToe";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -337,7 +341,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = someballs.InvfinityTicTacToe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
