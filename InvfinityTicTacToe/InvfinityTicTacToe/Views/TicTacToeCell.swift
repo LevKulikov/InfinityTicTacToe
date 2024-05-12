@@ -10,15 +10,24 @@ import SwiftUI
 struct TicTacToeCell: View {
     @Binding var currentMarkPlay: TicTacToeMark
     @Binding var xoMarkSet: TicTacToeMark?
+    @Binding var markPositions: [TicTacToeMark: [Int]]
     let index: Int
     let markSize: CGFloat
     let callback: ((Int) -> Void)?
 
+    @State private var deletionFlag = false
+    @State private var timerStarted = false
     private var userIdiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
-    init(currentMarkPlay: Binding<TicTacToeMark>, xoMarkSet: Binding<TicTacToeMark?>, index: Int, markSize: CGFloat, callback: ((Int) -> Void)? = nil ) {
+    init(currentMarkPlay: Binding<TicTacToeMark>, 
+         xoMarkSet: Binding<TicTacToeMark?>,
+         markPositions: Binding<[TicTacToeMark: [Int]]>,
+         index: Int,
+         markSize: CGFloat,
+         callback: ((Int) -> Void)? = nil ) {
         self._currentMarkPlay = currentMarkPlay
         self._xoMarkSet = xoMarkSet
+        self._markPositions = markPositions
         self.index = index
         self.markSize = markSize
         self.callback = callback
@@ -33,21 +42,25 @@ struct TicTacToeCell: View {
                     
                     Image(systemName: xoMarkSet == .xmark ? "xmark" : "circle")
                         .font(.system(size: markSize))
-                        .bold()
+                        .fontWeight(deletionFlag ? .regular : .bold)
                         .foregroundStyle(color)
-                        .shadow(color: color, radius: 10)
+                        .opacity(deletionFlag ? 0.8 : 1)
+                        .shadow(color: color, radius: deletionFlag ? 0 : 10)
                         .padding()
                 }
             }
             .background {
                 if let xoMarkSet {
                     RoundedRectangle(cornerRadius: userIdiom == .phone ? 15 : 25)
-                        .stroke(style: StrokeStyle(lineWidth: 9))
-                        .fill((xoMarkSet == .xmark ? Color.red : Color.blue).opacity(0.2))
+                        .stroke(style: StrokeStyle(lineWidth: userIdiom == .phone ? 5 : 9))
+                        .fill((xoMarkSet == .xmark ? Color.red : Color.blue).opacity(deletionFlag ? 0.25 : 0.7))
                 }
             }
             .onTapGesture {
                 onTap()
+            }
+            .onChange(of: markPositions) {_ in
+                checkIfWillBeDeleted()
             }
     }
     
@@ -63,11 +76,49 @@ struct TicTacToeCell: View {
             callback?(index)
         }
     }
+    
+    private func checkIfWillBeDeleted() {
+        guard let xoMarkSet else { return }
+        guard let allIndexes = markPositions[xoMarkSet], allIndexes.count > 2 else { return }
+        let firstIndex = allIndexes.first!
+        
+        if firstIndex == index {
+            withAnimation {
+                deletionFlag = true
+            }
+            startTimer()
+        }
+    }
+    
+    private func startTimer() {
+        guard !timerStarted else { return }
+        timerStarted = true
+        Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { timer in
+            withAnimation {
+                if deletionFlag {
+                    deletionFlag = false
+                } else {
+                    deletionFlag = true
+                }
+            }
+            
+            if xoMarkSet == nil {
+                timer.invalidate()
+                timerStarted = false
+                deletionFlag = false
+            }
+        }
+    }
 }
 
 #Preview {
     @State var mark: TicTacToeMark = .omark
+    @State var xoMarkSet: TicTacToeMark?
+    @State var markPositions: [TicTacToeMark: [Int]] = [
+        .xmark : [],
+        .omark : []
+    ]
     
-    return TicTacToeCell(currentMarkPlay: $mark, xoMarkSet: .constant(nil), index: 1, markSize: 100)
+    return TicTacToeCell(currentMarkPlay: $mark, xoMarkSet: $xoMarkSet, markPositions: $markPositions, index: 1, markSize: 100)
         .frame(width: 200, height: 200)
 }

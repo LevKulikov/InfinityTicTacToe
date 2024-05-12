@@ -74,6 +74,7 @@ struct GameView: View {
                                 }, set: { newCellMark in
                                     gameScheme[index] = newCellMark
                                 }),
+                                markPositions: $markPositions,
                                 index: index,
                                 markSize: maxHeight / 2,
                                 callback: manageGame
@@ -225,6 +226,7 @@ struct GameView: View {
     }
     
     private func closeGame() {
+        restartGame()
         withAnimation(.snappy) {
             selectedGame = nil
         }
