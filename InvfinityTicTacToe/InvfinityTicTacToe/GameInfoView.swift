@@ -18,52 +18,7 @@ struct GameInfoView: View {
     //MARK: - Body
     var body: some View {
         VStack {
-            
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(selectedGame?.rawValue ?? "Game Title")
-                        .font(.title2)
-                        .bold()
-                    
-                    Spacer()
-                    
-                    Button("", systemImage: "xmark") {
-                        closeInfo()
-                    }
-                    .font(.title2)
-                    .tint(.secondary)
-                }
-                
-                Text("Only three figures of each side can be on the field. If fourth added, the first one disappears")
-                    .padding(.vertical)
-                
-                Button {
-                    restartGameAndCloseInfo()
-                } label: {
-                    Text("Restart")
-                        .frame(height: 30)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                
-                Button {
-                    closeGame()
-                } label: {
-                    Text("Close Game")
-                        .frame(height: 30)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(Color.red)
-            }
-            .padding()
-            .background {
-                RoundedRectangle(cornerRadius: 15.0)
-                    .fill(Material.ultraThin)
-            }
-            .frame(maxWidth: 400)
-            .padding()
-            
+            infoView
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
@@ -74,8 +29,55 @@ struct GameInfoView: View {
         .ignoresSafeArea()
     }
     
-    //MARK: - Methods
+    private var infoView: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(selectedGame?.rawValue ?? "Game Title")
+                    .font(.title2)
+                    .bold()
+                
+                Spacer()
+                
+                Button("", systemImage: "xmark") {
+                    closeInfo()
+                }
+                .font(.title2)
+                .tint(.secondary)
+            }
+            
+            Text("Only three figures of each side can be on the field. If fourth added, the first one disappears")
+                .padding(.vertical)
+            
+            Button {
+                restartGameAndCloseInfo()
+            } label: {
+                Text("Restart")
+                    .frame(height: 30)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            
+            Button {
+                closeGame()
+            } label: {
+                Text("Close Game")
+                    .frame(height: 30)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(Color.red)
+        }
+        .padding()
+        .background {
+            RoundedRectangle(cornerRadius: 15.0)
+                .fill(Material.ultraThin)
+        }
+        .frame(maxWidth: 400)
+        .padding()
+        .matchedGeometryEffect(id: "gameImage", in: namespace)
+    }
     
+    //MARK: - Methods
     private func closeInfo() {
         withAnimation(.snappy) {
             showInfo = false
