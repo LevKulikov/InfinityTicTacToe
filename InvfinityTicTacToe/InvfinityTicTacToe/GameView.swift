@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-enum GameType: CaseIterable {
-    case onlyThree
+enum GameType: String, CaseIterable {
+    case onlyThree = "Only Three"
 }
 
 enum TicTacToeMark: String {
