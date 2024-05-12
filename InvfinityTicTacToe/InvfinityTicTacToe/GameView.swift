@@ -24,6 +24,7 @@ struct GameView: View {
     
     //MARK: Private props
     @Environment(\.colorScheme) var colorScheme
+    @Namespace private var localNamespace
     @State private var currentMarkPlay: TicTacToeMark = .xmark
     @State private var showInfo = false
     @State private var winner: TicTacToeMark? = nil
@@ -84,19 +85,19 @@ struct GameView: View {
                     }
                     .padding()
                     .disabled(winner != nil)
+                    .matchedGeometryEffect(id: "gameview", in: namespace)
                     
                     Spacer()
                 }
                 .background(markIndicators)
                 .overlay(alignment: .topLeading) {
-                    closeButton
+                    gameManageButton
                 }
-                .matchedGeometryEffect(id: "gameview", in: namespace)
                 .ignoresSafeArea(edges: .vertical)
                 
                 if showInfo {
                     GameInfoView(
-                        namespace: namespace,
+                        namespace: localNamespace,
                         showInfo: $showInfo,
                         selectedGame: $selectedGame,
                         winner: $winner,
@@ -129,7 +130,7 @@ struct GameView: View {
         }
     }
     
-    var closeButton: some View {
+    var gameManageButton: some View {
         Button("Game") {
             withAnimation(.snappy) {
                 showInfo = true
@@ -137,13 +138,14 @@ struct GameView: View {
         }
         .buttonStyle(.bordered)
         .foregroundStyle(.secondary)
-        .contextMenu {
-            Button("Close Game", action: closeGame)
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 5))
         .padding(.horizontal)
         .padding(.top, 50)
         .matchedGeometryEffect(id: "gameImage", in: namespace)
+        .matchedGeometryEffect(id: "gameInfo", in: localNamespace)
+        .clipShape(RoundedRectangle(cornerRadius: 5))
+        .contextMenu {
+            Button("Close Game", action: closeGame)
+        }
         .opacity(showInfo ? 0 : 1)
     }
     
