@@ -12,6 +12,7 @@ struct GameInfoView: View {
     var namespace: Namespace.ID
     @Binding var showInfo: Bool
     @Binding var selectedGame: GameType?
+    @Binding var winner: TicTacToeMark?
     @Binding var gameScheme: [Int : TicTacToeMark?]
     @Binding var markPositions: [TicTacToeMark: [Int]]
     
@@ -86,6 +87,8 @@ struct GameInfoView: View {
     
     private func restartGameAndCloseInfo() {
         withAnimation(.snappy) {
+            winner = nil
+            
             for index in gameScheme.keys {
                 gameScheme[index] = nil
             }
@@ -108,6 +111,7 @@ struct GameInfoView: View {
     @Namespace var namespace
     @State var showInfo = true
     @State var selectedGame: GameType? = .onlyThree
+    @State var winner: TicTacToeMark? = nil
     @State var gameScheme: [Int : TicTacToeMark?] = [
         0 : nil,
         1 : nil,
@@ -127,6 +131,7 @@ struct GameInfoView: View {
     return GameInfoView(namespace: namespace, 
                         showInfo: $showInfo,
                         selectedGame: $selectedGame,
+                        winner: $winner,
                         gameScheme: $gameScheme,
                         markPositions: $markPositions)
 }
