@@ -86,6 +86,11 @@ struct GameInfoView: View {
     }
     
     private func restartGameAndCloseInfo() {
+        restartGame()
+        closeInfo()
+    }
+    
+    private func restartGame() {
         withAnimation(.snappy) {
             winner = nil
             
@@ -97,10 +102,10 @@ struct GameInfoView: View {
                 markPositions[index] = []
             }
         }
-        closeInfo()
     }
     
     private func closeGame() {
+        restartGame()
         withAnimation(.snappy) {
             selectedGame = nil
         }
