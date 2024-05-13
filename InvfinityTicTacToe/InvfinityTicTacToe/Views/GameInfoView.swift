@@ -106,7 +106,7 @@ struct GameInfoView: View {
     
     private func closeGame() {
         restartGameAndCloseInfo()
-        withAnimation(.snappy) {
+        withAnimation(.snappy(duration: 0.4)) {
             selectedGame = nil
         }
     }

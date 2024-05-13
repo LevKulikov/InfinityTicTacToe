@@ -118,7 +118,7 @@ struct HomeView: View {
     /// Because of Multiple views insertions in matched geometry group it is need to disable view showing for a little amount of time
     private func activateTaps(_ newValue: GameType?) {
         if newValue == nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 tapDisabled = false
             }
         }
