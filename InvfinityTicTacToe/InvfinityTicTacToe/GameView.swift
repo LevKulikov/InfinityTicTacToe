@@ -76,6 +76,7 @@ struct GameView: View {
                                     gameScheme[index] = newCellMark
                                 }),
                                 markPositions: $markPositions,
+                                winner: $winner,
                                 index: index,
                                 markSize: maxHeight / 2,
                                 callback: manageGame
