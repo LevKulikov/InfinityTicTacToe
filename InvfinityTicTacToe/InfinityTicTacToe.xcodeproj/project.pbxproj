@@ -18,7 +18,7 @@
 
 /* Begin PBXFileReference section */
 		736B23612BF1531A00693D1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		73C7AE802BECF08600B2CD8F /* InvfinityTicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InvfinityTicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73C7AE802BECF08600B2CD8F /* InfinityTicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityTicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73C7AE832BECF08600B2CD8F /* InvfinityTicTacToeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvfinityTicTacToeApp.swift; sourceTree = "<group>"; };
 		73C7AE872BECF08700B2CD8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		73C7AE8A2BECF08700B2CD8F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 		73C7AE812BECF08600B2CD8F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				73C7AE802BECF08600B2CD8F /* InvfinityTicTacToe.app */,
+				73C7AE802BECF08600B2CD8F /* InfinityTicTacToe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,9 +89,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		73C7AE7F2BECF08600B2CD8F /* InvfinityTicTacToe */ = {
+		73C7AE7F2BECF08600B2CD8F /* InfinityTicTacToe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 73C7AE8E2BECF08700B2CD8F /* Build configuration list for PBXNativeTarget "InvfinityTicTacToe" */;
+			buildConfigurationList = 73C7AE8E2BECF08700B2CD8F /* Build configuration list for PBXNativeTarget "InfinityTicTacToe" */;
 			buildPhases = (
 				73C7AE7C2BECF08600B2CD8F /* Sources */,
 				73C7AE7D2BECF08600B2CD8F /* Frameworks */,
@@ -101,9 +101,9 @@
 			);
 			dependencies = (
 			);
-			name = InvfinityTicTacToe;
+			name = InfinityTicTacToe;
 			productName = InvfinityTicTacToe;
-			productReference = 73C7AE802BECF08600B2CD8F /* InvfinityTicTacToe.app */;
+			productReference = 73C7AE802BECF08600B2CD8F /* InfinityTicTacToe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -121,7 +121,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 73C7AE7B2BECF08600B2CD8F /* Build configuration list for PBXProject "InvfinityTicTacToe" */;
+			buildConfigurationList = 73C7AE7B2BECF08600B2CD8F /* Build configuration list for PBXProject "InfinityTicTacToe" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -134,7 +134,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				73C7AE7F2BECF08600B2CD8F /* InvfinityTicTacToe */,
+				73C7AE7F2BECF08600B2CD8F /* InfinityTicTacToe */,
 			);
 		};
 /* End PBXProject section */
@@ -353,7 +353,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		73C7AE7B2BECF08600B2CD8F /* Build configuration list for PBXProject "InvfinityTicTacToe" */ = {
+		73C7AE7B2BECF08600B2CD8F /* Build configuration list for PBXProject "InfinityTicTacToe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				73C7AE8C2BECF08700B2CD8F /* Debug */,
@@ -362,7 +362,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		73C7AE8E2BECF08700B2CD8F /* Build configuration list for PBXNativeTarget "InvfinityTicTacToe" */ = {
+		73C7AE8E2BECF08700B2CD8F /* Build configuration list for PBXNativeTarget "InfinityTicTacToe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				73C7AE8F2BECF08700B2CD8F /* Debug */,
