@@ -230,7 +230,7 @@ struct GameView: View {
     
     private func closeGame() {
         restartGame()
-        withAnimation(.snappy) {
+        withAnimation(.snappy(duration: 0.4)) {
             selectedGame = nil
         }
     }
