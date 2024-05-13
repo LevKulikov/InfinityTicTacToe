@@ -75,7 +75,7 @@ struct GameInfoView: View {
         }
         .frame(maxWidth: 400)
         .padding()
-        .matchedGeometryEffect(id: "gameImage", in: namespace)
+        .matchedGeometryEffect(id: "gameInfo", in: namespace)
     }
     
     //MARK: - Methods
@@ -86,8 +86,8 @@ struct GameInfoView: View {
     }
     
     private func restartGameAndCloseInfo() {
-        restartGame()
         closeInfo()
+        restartGame()
     }
     
     private func restartGame() {
@@ -105,8 +105,8 @@ struct GameInfoView: View {
     }
     
     private func closeGame() {
-        restartGame()
-        withAnimation(.snappy) {
+        restartGameAndCloseInfo()
+        withAnimation(.snappy(duration: 0.4)) {
             selectedGame = nil
         }
     }

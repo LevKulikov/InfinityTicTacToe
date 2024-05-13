@@ -11,6 +11,8 @@ struct HomeView: View {
     //MARK: - Properities
     @Namespace private var namespace
     @State private var selectedGame: GameType?
+    /// Because of Multiple views insertions in matched geometry group it is need to disable view showing for a little amount of time, this flag inicates if view can be shown or not
+    @State private var tapDisabled = false
     
     //MARK: - Body
     var body: some View {
@@ -98,14 +100,29 @@ struct HomeView: View {
         }
         .padding()
         .onTapGesture {
-            withAnimation(.snappy) {
-                selectedGame = .onlyThree
-            }
+            showGame(.onlyThree)
         }
+        .onChange(of: selectedGame, perform: activateTaps(_:))
         .frame(maxWidth: 700)
     }
     
     //MARK: - Methods
+    private func showGame(_ game: GameType) {
+        guard !tapDisabled else { return }
+        tapDisabled = true
+        withAnimation(.snappy) {
+            selectedGame = game
+        }
+    }
+    
+    /// Because of Multiple views insertions in matched geometry group it is need to disable view showing for a little amount of time
+    private func activateTaps(_ newValue: GameType?) {
+        if newValue == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                tapDisabled = false
+            }
+        }
+    }
 }
 
 #Preview {

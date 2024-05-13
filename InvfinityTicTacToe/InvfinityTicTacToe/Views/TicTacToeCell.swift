@@ -11,23 +11,27 @@ struct TicTacToeCell: View {
     @Binding var currentMarkPlay: TicTacToeMark
     @Binding var xoMarkSet: TicTacToeMark?
     @Binding var markPositions: [TicTacToeMark: [Int]]
+    @Binding var winner: TicTacToeMark?
     let index: Int
     let markSize: CGFloat
     let callback: ((Int) -> Void)?
 
     @State private var deletionFlag = false
     @State private var timerStarted = false
+    @State private var timer: Timer?
     private var userIdiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
     init(currentMarkPlay: Binding<TicTacToeMark>, 
          xoMarkSet: Binding<TicTacToeMark?>,
          markPositions: Binding<[TicTacToeMark: [Int]]>,
+         winner: Binding<TicTacToeMark?>,
          index: Int,
          markSize: CGFloat,
          callback: ((Int) -> Void)? = nil ) {
         self._currentMarkPlay = currentMarkPlay
         self._xoMarkSet = xoMarkSet
         self._markPositions = markPositions
+        self._winner = winner
         self.index = index
         self.markSize = markSize
         self.callback = callback
@@ -62,6 +66,10 @@ struct TicTacToeCell: View {
             .onChange(of: markPositions) {_ in
                 checkIfWillBeDeleted()
             }
+            .onChange(of: winner) {_ in
+                checkIfWinner()
+            }
+            
     }
     
     private func onTap() {
@@ -90,10 +98,19 @@ struct TicTacToeCell: View {
         }
     }
     
+    private func checkIfWinner() {
+        guard let winner else { return }
+        stopTimer()
+        
+        if xoMarkSet == winner {
+            startTimer()
+        }
+    }
+    
     private func startTimer() {
         guard !timerStarted else { return }
         timerStarted = true
-        Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { timer in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { _ in
             withAnimation {
                 if deletionFlag {
                     deletionFlag = false
@@ -103,11 +120,15 @@ struct TicTacToeCell: View {
             }
             
             if xoMarkSet == nil {
-                timer.invalidate()
-                timerStarted = false
-                deletionFlag = false
+                stopTimer()
             }
         }
+    }
+    
+    private func stopTimer() {
+        self.timer?.invalidate()
+        timerStarted = false
+        deletionFlag = false
     }
 }
 
@@ -118,7 +139,8 @@ struct TicTacToeCell: View {
         .xmark : [],
         .omark : []
     ]
+    @State var winner: TicTacToeMark? = .omark
     
-    return TicTacToeCell(currentMarkPlay: $mark, xoMarkSet: $xoMarkSet, markPositions: $markPositions, index: 1, markSize: 100)
+    return TicTacToeCell(currentMarkPlay: $mark, xoMarkSet: $xoMarkSet, markPositions: $markPositions, winner: $winner, index: 1, markSize: 100)
         .frame(width: 200, height: 200)
 }
