@@ -139,14 +139,14 @@ struct GameView: View {
         }
         .buttonStyle(.bordered)
         .foregroundStyle(.secondary)
-        .padding(.horizontal)
-        .padding(.top, 50)
-        .clipShape(RoundedRectangle(cornerRadius: 5))
-        .matchedGeometryEffect(id: "gameImage", in: namespace)
-        .matchedGeometryEffect(id: "gameInfo", in: localNamespace)
+        .contentShape([.hoverEffect, .contextMenuPreview], RoundedRectangle(cornerRadius: 8.0))
         .contextMenu {
             Button("Close Game", action: closeGame)
         }
+        .padding(.horizontal)
+        .padding(.top, 50)
+        .matchedGeometryEffect(id: "gameImage", in: namespace)
+        .matchedGeometryEffect(id: "gameInfo", in: localNamespace)
         .opacity(showInfo ? 0 : 1)
     }
     
