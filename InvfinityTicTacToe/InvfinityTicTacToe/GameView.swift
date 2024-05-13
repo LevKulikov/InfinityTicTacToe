@@ -140,9 +140,9 @@ struct GameView: View {
         .foregroundStyle(.secondary)
         .padding(.horizontal)
         .padding(.top, 50)
+        .clipShape(RoundedRectangle(cornerRadius: 5))
         .matchedGeometryEffect(id: "gameImage", in: namespace)
         .matchedGeometryEffect(id: "gameInfo", in: localNamespace)
-        .clipShape(RoundedRectangle(cornerRadius: 5))
         .contextMenu {
             Button("Close Game", action: closeGame)
         }
